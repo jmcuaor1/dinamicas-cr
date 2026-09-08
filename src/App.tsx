@@ -63,7 +63,6 @@ const BENEFITS = [
 const PROOFS = [
   {
     name: "Valentina R.",
-    city: "Buenos Aires",
     amount: "$15.000",
     method: "Transferencia bancaria",
     date: "04 Sep 2026",
@@ -71,33 +70,29 @@ const PROOFS = [
   },
   {
     name: "Marcos G.",
-    city: "Córdoba",
     amount: "$22.500",
-    method: "Mercado Pago",
+    method: "Billetera virtual",
     date: "03 Sep 2026",
     img: PAYMENT_PROOF_IMAGES[1],
   },
   {
     name: "Lucía M.",
-    city: "Rosario",
     amount: "$8.000",
-    method: "Transferencia CBU",
+    method: "Transferencia interbancaria",
     date: "02 Sep 2026",
     img: PAYMENT_PROOF_IMAGES[2],
   },
   {
     name: "Diego F.",
-    city: "Mendoza",
     amount: "$30.000",
-    method: "Mercado Pago",
+    method: "Billetera virtual",
     date: "01 Sep 2026",
     img: PAYMENT_PROOF_IMAGES[3],
   },
   {
     name: "Camila P.",
-    city: "La Plata",
     amount: "$12.000",
-    method: "Uala",
+    method: "Transferencia instantánea",
     date: "31 Ago 2026",
     img: PAYMENT_PROOF_IMAGES[4],
   },
@@ -138,19 +133,16 @@ const TESTIMONIALS = [
     quote:
       "No lo podía creer. Me llegó la transferencia en minutos. El grupo es serio y el equipo muy transparente.",
     name: "Valentina R.",
-    city: "Buenos Aires",
   },
   {
     quote:
       "Entré desconfiada pero ya gané dos veces. Los comprobantes son reales y la comunidad es increíble.",
     name: "Lucía M.",
-    city: "Rosario",
   },
   {
     quote:
       "Llevo 3 meses en el grupo y recomiendo a todos mis amigos. Dinámicas todos los días, muy buena onda.",
     name: "Marcos G.",
-    city: "Córdoba",
   },
 ];
 
@@ -338,7 +330,7 @@ export default function App() {
           <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
             <div>
               <div className="inline-flex items-center gap-2 bg-[#B7DE05]/10 border border-[#B7DE05]/30 text-[#DBF225] text-xs font-semibold px-3 py-1.5 rounded-full mb-6">
-                <span>📍</span> Argentina · Disponible en todo el país
+                <span>🌎</span> Comunidad 100% online
               </div>
 
               <h1
@@ -403,7 +395,7 @@ export default function App() {
                   </div>
                   <div className="mt-4 flex items-center justify-between text-sm text-[#DCDADB]">
                     <span>Valentina R.</span>
-                    <span>Buenos Aires</span>
+                    <span>Hace 12 minutos</span>
                   </div>
                 </div>
               </div>
@@ -494,7 +486,7 @@ export default function App() {
                     {p.amount}
                   </p>
                   <p className="text-[#040507] font-semibold text-sm">{p.name}</p>
-                  <p className="text-[#C6C5C6] text-xs">{p.city} · {p.date}</p>
+                  <p className="text-[#C6C5C6] text-xs">{p.date}</p>
                   <p className="text-[#252824] text-xs mt-1 flex items-center gap-1">
                     <span>💳</span> {p.method}
                   </p>
@@ -622,10 +614,7 @@ export default function App() {
                   <div className="w-8 h-8 rounded-full bg-[#DBF225] flex items-center justify-center text-[#040507] font-bold text-sm">
                     {t.name[0]}
                   </div>
-                  <div>
-                    <p className="font-semibold text-[#040507] text-sm" style={{ fontFamily: "Outfit, sans-serif" }}>{t.name}</p>
-                    <p className="text-[#C6C5C6] text-xs">{t.city}</p>
-                  </div>
+                  <p className="font-semibold text-[#040507] text-sm" style={{ fontFamily: "Outfit, sans-serif" }}>{t.name}</p>
                 </div>
               </div>
             ))}
@@ -770,7 +759,7 @@ export default function App() {
           {/* Legal */}
           <div className="border-t border-[#252824] pt-6">
             <p className="text-xs leading-relaxed text-[#DCDADB] mb-2">
-              ⚖️ Dinámicas CR opera en cumplimiento con la normativa de entretenimiento y sorteos de Argentina. Las dinámicas son de participación voluntaria y gratuita. Jugá con responsabilidad. Solo para mayores de 18 años.
+              ⚖️ Las dinámicas de Dinámicas CR son de participación voluntaria y gratuita. Jugá con responsabilidad. Solo para mayores de 18 años.
             </p>
             <p className="text-xs text-[#C6C5C6]">
               © 2026 Dinámicas CR · Todos los derechos reservados
