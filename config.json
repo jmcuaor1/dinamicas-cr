@@ -1,0 +1,21 @@
+{
+  "brandName": "Dinámicas CR",
+  "whatsappLink": "https://chat.whatsapp.com/JntWwJB5W8OERMzCvocwQC",
+  "email": "hola@dinamicascr.com",
+  "phone": "+54 9 11 2345-6789",
+  "logoWhite": "https://i.imgur.com/SzTYrgW.jpeg",
+  "logoBlack": "https://i.imgur.com/0hEnF1h.jpeg",
+  "heroImage": "https://i.imgur.com/SzTYrgW.jpeg",
+  "comprobantes": [
+    "https://i.imgur.com/8aYcrcr.jpeg",
+    "https://i.imgur.com/1pLUgle.jpeg",
+    "https://i.imgur.com/FuphZKo.jpeg",
+    "https://i.imgur.com/DJ9qJco.jpeg",
+    "https://i.imgur.com/IXHYyRb.jpeg"
+  ],
+  "socialLinks": {
+    "instagram": "@dinamicascr",
+    "tiktok": "@dinamicascr",
+    "facebook": "Dinámicas CR Comunidad"
+  }
+}

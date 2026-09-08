@@ -1,0 +1,10 @@
+{
+  "description": "Engage with a vibrant WhatsApp community that offers daily dynamics and verified cash prizes, ensuring transparency and real rewards for participants.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
