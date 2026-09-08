@@ -52,35 +52,50 @@ export default async function handler(req, res) {
 
   const value = { whatsappLink: parsedUrl.toString(), phone: trimmedPhone };
 
-  const patchItem = (operation) =>
-    fetch(`https://api.vercel.com/v1/global-config/${edgeConfigId}/items`, {
+  // El store vive bajo un team, no bajo la cuenta personal del token. Sin
+  // teamId en la URL, Vercel busca el edgeConfigId en el namespace de la
+  // cuenta personal y devuelve "not found" aunque el ID sea correcto.
+  const teamId = process.env.VERCEL_TEAM_ID || "team_WiO5KtSE7S5GsMaj1yVP6AQx";
+
+  const patchItem = (operation) => {
+    const url = `https://api.vercel.com/v1/global-config/${edgeConfigId}/items?teamId=${teamId}`;
+    const body = JSON.stringify({
+      items: [{ operation, key: "site-config", value }],
+    });
+    console.log("[update-config] PATCH", url);
+    console.log("[update-config] body", body);
+    return fetch(url, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        items: [{ operation, key: "site-config", value }],
-      }),
+      body,
     });
+  };
 
   try {
     // El item "site-config" no existe todavía la primera vez que se guarda,
     // así que primero intentamos crearlo. Si ya existe (guardados
     // posteriores), "create" falla y reintentamos con "update".
     let response = await patchItem("create");
+    let errText = response.ok ? null : await response.text();
+    console.log("[update-config] create status", response.status, errText);
+
     if (!response.ok) {
       response = await patchItem("update");
+      errText = response.ok ? null : await response.text();
+      console.log("[update-config] update status", response.status, errText);
     }
 
     if (!response.ok) {
-      const errText = await response.text();
       res.status(502).json({ error: `No se pudo guardar: ${errText}` });
       return;
     }
 
     res.status(200).json({ ok: true });
-  } catch {
+  } catch (err) {
+    console.log("[update-config] exception", err?.message);
     res.status(500).json({ error: "Error al guardar los cambios." });
   }
 }
