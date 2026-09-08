@@ -50,26 +50,28 @@ export default async function handler(req, res) {
     return;
   }
 
-  try {
-    const response = await fetch(
-      `https://api.vercel.com/v1/edge-config/${edgeConfigId}/items`,
-      {
-        method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          items: [
-            {
-              operation: "upsert",
-              key: "site-config",
-              value: { whatsappLink: parsedUrl.toString(), phone: trimmedPhone },
-            },
-          ],
-        }),
+  const value = { whatsappLink: parsedUrl.toString(), phone: trimmedPhone };
+
+  const patchItem = (operation) =>
+    fetch(`https://api.vercel.com/v1/edge-config/${edgeConfigId}/items`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
-    );
+      body: JSON.stringify({
+        items: [{ operation, key: "site-config", value }],
+      }),
+    });
+
+  try {
+    // El item "site-config" no existe todavía la primera vez que se guarda,
+    // así que primero intentamos crearlo. Si ya existe (guardados
+    // posteriores), "create" falla y reintentamos con "update".
+    let response = await patchItem("create");
+    if (!response.ok) {
+      response = await patchItem("update");
+    }
 
     if (!response.ok) {
       const errText = await response.text();
