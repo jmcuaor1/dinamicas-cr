@@ -53,7 +53,7 @@ export default async function handler(req, res) {
   const value = { whatsappLink: parsedUrl.toString(), phone: trimmedPhone };
 
   const patchItem = (operation) =>
-    fetch(`https://api.vercel.com/v1/edge-config/${edgeConfigId}/items`, {
+    fetch(`https://api.vercel.com/v1/global-config/${edgeConfigId}/items`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,

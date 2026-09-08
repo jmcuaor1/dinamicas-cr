@@ -1,10 +1,10 @@
-import { createClient } from "@vercel/edge-config";
+import { createClient } from "@vercel/global-config";
 
-// El SDK busca por defecto la connection string en process.env.EDGE_CONFIG,
-// pero Vercel nombra esa variable según el store conectado (acá quedó como
-// GLOBAL_CONFIG), así que la resolvemos explícitamente en vez de depender
-// del nombre por defecto.
-const connectionString = process.env.EDGE_CONFIG || process.env.GLOBAL_CONFIG;
+// Vercel renombró "Edge Config" a "Global Config"; la connection string que
+// Vercel inyecta automáticamente al conectar el store queda en
+// process.env.GLOBAL_CONFIG (se soporta EDGE_CONFIG también por si el store
+// se conectó con el nombre viejo).
+const connectionString = process.env.GLOBAL_CONFIG || process.env.EDGE_CONFIG;
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
