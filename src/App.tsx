@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import config from "../config.json";
+import { useSiteConfig } from "./useSiteConfig";
 
-const WA_LINK = config.whatsappLink;
 const BRAND_NAME = config.brandName;
 const HERO_IMAGE = config.heroImage;
 const LOGO_BLACK = config.logoBlack;
 const LOGO_WHITE = config.logoWhite;
 const PAYMENT_PROOF_IMAGES = config.comprobantes;
-const PHONE = config.phone;
 
 const SOCIAL_LINKS = [
   {
@@ -209,6 +208,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 }
 
 export default function App() {
+  const { whatsappLink: WA_LINK, phone: PHONE } = useSiteConfig();
   const [menuOpen, setMenuOpen] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
 
