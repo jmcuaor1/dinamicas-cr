@@ -1,5 +1,12 @@
-const KV_URL = process.env.KV_REST_API_URL;
-const KV_TOKEN = process.env.KV_REST_API_TOKEN;
+import Redis from "ioredis";
+
+const REDIS_URL = process.env.REDIS_URL;
+let client;
+
+function getClient() {
+  if (!client && REDIS_URL) client = new Redis(REDIS_URL);
+  return client;
+}
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
@@ -9,19 +16,16 @@ export default async function handler(req, res) {
 
   res.setHeader("Cache-Control", "no-store");
 
-  if (!KV_URL || !KV_TOKEN) {
-    // Sin KV conectado todavía: el front cae a los valores de config.json.
+  const redis = getClient();
+  if (!redis) {
+    // Sin Redis conectado todavía: el front cae a los valores de config.json.
     res.status(200).json({});
     return;
   }
 
   try {
-    const kvRes = await fetch(`${KV_URL}/get/site-config`, {
-      headers: { Authorization: `Bearer ${KV_TOKEN}` },
-    });
-    const data = await kvRes.json();
-    const siteConfig = data.result ? JSON.parse(data.result) : {};
-    res.status(200).json(siteConfig);
+    const raw = await redis.get("site-config");
+    res.status(200).json(raw ? JSON.parse(raw) : {});
   } catch {
     res.status(200).json({});
   }

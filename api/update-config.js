@@ -1,3 +1,13 @@
+import Redis from "ioredis";
+
+const REDIS_URL = process.env.REDIS_URL;
+let client;
+
+function getClient() {
+  if (!client && REDIS_URL) client = new Redis(REDIS_URL);
+  return client;
+}
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.status(405).json({ error: "Method not allowed" });
@@ -39,13 +49,10 @@ export default async function handler(req, res) {
     return;
   }
 
-  const kvUrl = process.env.KV_REST_API_URL;
-  const kvToken = process.env.KV_REST_API_TOKEN;
-
-  if (!kvUrl || !kvToken) {
+  const redis = getClient();
+  if (!redis) {
     res.status(500).json({
-      error:
-        "El servidor no está configurado: falta conectar la base de datos KV (Storage → Redis) al proyecto.",
+      error: "El servidor no está configurado: falta la variable REDIS_URL.",
     });
     return;
   }
@@ -53,23 +60,9 @@ export default async function handler(req, res) {
   const value = { whatsappLink: parsedUrl.toString(), phone: trimmedPhone };
 
   try {
-    const kvRes = await fetch(`${kvUrl}/set/site-config`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${kvToken}`,
-        "Content-Type": "text/plain",
-      },
-      body: JSON.stringify(value),
-    });
-
-    if (!kvRes.ok) {
-      const errText = await kvRes.text();
-      res.status(502).json({ error: `No se pudo guardar: ${errText}` });
-      return;
-    }
-
+    await redis.set("site-config", JSON.stringify(value));
     res.status(200).json({ ok: true });
   } catch (err) {
-    res.status(500).json({ error: "Error al guardar los cambios." });
+    res.status(500).json({ error: `Error al guardar los cambios: ${err.message}` });
   }
 }
