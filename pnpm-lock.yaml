@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@vercel/global-config':
-        specifier: ^1.5.1
-        version: 1.5.1
       react:
         specifier: ^19.0.0
         version: 19.2.4
@@ -331,21 +328,6 @@ packages:
 
   '@types/react@19.2.14':
     resolution: {integrity: sha512-ilcTH/UniCkMdtexkoCN0bI7pMcJDvmQFPvuPvmEaYA/NSfFTAgdUSLAoVjaRJm7+6PvcM+q1zYOwS4wTYMF9w==}
-
-  '@vercel/global-config-fs@0.1.0':
-    resolution: {integrity: sha512-xxMUwf96H/qKTA4Az+uh3xlVWkwnN3z400P5gex0uUsU8pe99njopYVyKVoUTfu8gN9xbHqaigWaIBr1+lufMg==}
-
-  '@vercel/global-config@1.5.1':
-    resolution: {integrity: sha512-PUJaoyMGuSLdKnBgYIqeH1i6U3G+5noLvvJLqI8IPP5+P0b2Q5EcBBraFRh6ctNY/yTpb40klyLYyE3X0OPmKQ==}
-    engines: {node: '>=14.6'}
-    peerDependencies:
-      '@opentelemetry/api': ^1.7.0
-      next: '>=1'
-    peerDependenciesMeta:
-      '@opentelemetry/api':
-        optional: true
-      next:
-        optional: true
 
   '@vitejs/plugin-react@6.0.1':
     resolution: {integrity: sha512-l9X/E3cDb+xY3SWzlG1MOGt2usfEHGMNIaegaUGFsLkb3RCn/k8/TOXBcab+OndDI4TBtktT8/9BwwW8Vi9KUQ==}
@@ -781,12 +763,6 @@ snapshots:
   '@types/react@19.2.14':
     dependencies:
       csstype: 3.2.3
-
-  '@vercel/global-config-fs@0.1.0': {}
-
-  '@vercel/global-config@1.5.1':
-    dependencies:
-      '@vercel/global-config-fs': 0.1.0
 
   '@vitejs/plugin-react@6.0.1(vite@8.0.5(@types/node@22.19.17)(jiti@2.6.1))':
     dependencies:

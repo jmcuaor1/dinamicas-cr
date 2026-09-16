@@ -1,10 +1,5 @@
-import { createClient } from "@vercel/global-config";
-
-// Vercel renombró "Edge Config" a "Global Config"; la connection string que
-// Vercel inyecta automáticamente al conectar el store queda en
-// process.env.GLOBAL_CONFIG (se soporta EDGE_CONFIG también por si el store
-// se conectó con el nombre viejo).
-const connectionString = process.env.GLOBAL_CONFIG || process.env.EDGE_CONFIG;
+const KV_URL = process.env.KV_REST_API_URL;
+const KV_TOKEN = process.env.KV_REST_API_TOKEN;
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
@@ -14,15 +9,18 @@ export default async function handler(req, res) {
 
   res.setHeader("Cache-Control", "no-store");
 
-  if (!connectionString) {
-    // Sin Edge Config conectado todavía: el front cae a los valores de config.json.
+  if (!KV_URL || !KV_TOKEN) {
+    // Sin KV conectado todavía: el front cae a los valores de config.json.
     res.status(200).json({});
     return;
   }
 
   try {
-    const edgeConfig = createClient(connectionString);
-    const siteConfig = (await edgeConfig.get("site-config")) || {};
+    const kvRes = await fetch(`${KV_URL}/get/site-config`, {
+      headers: { Authorization: `Bearer ${KV_TOKEN}` },
+    });
+    const data = await kvRes.json();
+    const siteConfig = data.result ? JSON.parse(data.result) : {};
     res.status(200).json(siteConfig);
   } catch {
     res.status(200).json({});
